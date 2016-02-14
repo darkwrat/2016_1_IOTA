@@ -10,11 +10,59 @@
     <script src="/js/tmpl/login.js"></script>
     <script src="/js/index.js"></script>
 </head><body>
+    <canvas id="canvas"></canvas>
+    <!--
     <div id="page">
-        <h1>Hello world!</h1>
+        <h1>Hello world!</h1>  
     </div>
+    -->
     <script>
         var $page = $('#page');
         showMainScreen();
+    </script>
+    <script>
+        (function() {
+            var canvas = document.getElementById('canvas');
+            canvas.style.background = '#f70';
+            canvas.onmousemove = highlight;
+            canvas.onmousewheel = zoom;
+            
+            var context = canvas.getContext('2d');
+            context.fillStyle = '#000';
+            
+            var tileWidth = 100;
+            var tileHeight = 100;
+            
+            window.addEventListener('resize', resizeCanvas, false);
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            
+            function highlight(event) {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                
+                var rect = canvas.getBoundingClientRect();
+                var mx = event.clientX - rect.left;
+                var my = event.clientY - rect.top;
+                
+                var xIndex = Math.round((mx - tileWidth * 0.5) / tileWidth);
+                var yIndex = Math.round((my - tileHeight * 0.5) / tileHeight);
+                
+                context.fillRect(xIndex * tileWidth, yIndex * tileHeight,
+                    tileWidth, tileHeight);
+            }
+            
+            function zoom(event) {
+                tileWidth += event.wheelDelta / 10;
+                tileHeight += event.wheelDelta / 10;
+                
+                // TODO: нужна привязка к абсолютным координатам,
+                // чтобы плитка не скакала
+                highlight(event);
+            }
+        })();
     </script>
 </body></html>
