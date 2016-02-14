@@ -22,13 +22,18 @@
     </script>
     <script>
         (function() {
+            var tiles = [];
+            
+            var isDragStarted = false;
+            
             var canvas = document.getElementById('canvas');
             canvas.style.background = '#f70';
-            canvas.onmousemove = highlight;
+            canvas.onmousemove = redraw;
+            canvas.onmousedown = drag;
+            canvas.onmouseup = drop;
             canvas.onmousewheel = zoom;
             
             var context = canvas.getContext('2d');
-            context.fillStyle = '#000';
             
             var tileWidth = 100;
             var tileHeight = 100;
@@ -38,9 +43,53 @@
             function resizeCanvas() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
+                drawHand();
             }
             resizeCanvas();
             
+            function drawHand() {
+                var topPadding = window.innerHeight - 150;
+                var leftPadding = window.innerWidth / 2 - 50;
+                context.fillStyle = '#fff';
+                context.fillRect(leftPadding, topPadding, 100, 100);
+            }
+            
+            function drag(event) {
+                var topPadding = window.innerHeight - 150;
+                var leftPadding = window.innerWidth / 2 - 50;
+                if (isPointInsideRect(leftPadding, topPadding, 100, 100,
+                    event.clientX, event.clientY)) {
+                    isDragStarted = true;
+                    console.log('Drag started.')
+                }
+            }
+            
+            function drop(event) {
+                if (isDragStarted) {
+                    isDragStarted = false;
+                    highlight(event);
+                    console.log('Tile droped.')
+                }
+            }
+            
+            function redraw(event) {
+                highlight(event);
+                if (isDragStarted) {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.fillStyle = '#fff';
+                    context.fillRect(event.clientX - 50, event.clientY - 50, 100, 100);
+                }
+            }
+            
+            function isPointInsideRect(rectX, rectY, rectWidth, rectHeight, pointX, pointY) {
+                if (rectX <= pointX && pointX <= rectX + rectWidth
+                    && rectY <= pointY && pointY <= rectY + rectHeight) {
+                    return true;
+                }
+                return false;
+            }
+            
+            // Подсветка плитки, над которой находится мышь (onmousemove)
             function highlight(event) {
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 
@@ -51,8 +100,11 @@
                 var xIndex = Math.round((mx - tileWidth * 0.5) / tileWidth);
                 var yIndex = Math.round((my - tileHeight * 0.5) / tileHeight);
                 
+                context.fillStyle = '#000';
                 context.fillRect(xIndex * tileWidth, yIndex * tileHeight,
                     tileWidth, tileHeight);
+                
+                drawHand();
             }
             
             function zoom(event) {
