@@ -10,11 +10,157 @@
     <script src="/js/tmpl/login.js"></script>
     <script src="/js/index.js"></script>
 </head><body>
+    <!--
     <div id="page">
         <h1>Hello world!</h1>
     </div>
+    -->
+    <canvas id="canvas"></canvas>
     <script>
+        /*
         var $page = $('#page');
         showMainScreen();
+        */
+        (function() {
+
+            function Tile(width, height) {
+                if (arguments.length != 2) {
+                    throw new Error("Required two params")
+                }
+
+                var _width = width,
+                    _height = height;
+
+                this.getWidth = function () {
+                    return _width;
+                };
+
+                this.getHeight = function () {
+                    return _height;
+                };
+            }
+
+            function Camera(x, y, width, height) {
+                if (arguments.length != 4) {
+                    throw new Error("Required four args")
+                }
+
+                var _x = x,
+                    _y = y,
+                    _width = width,
+                    _height = height;
+
+                this.getX = function () {
+                    return _x;
+                };
+
+                this.getY = function () {
+                    return _y;
+                };
+
+                this.getWidth = function () {
+                    return _width;
+                };
+
+                this.getHeight = function () {
+                    return _height;
+                };
+
+                this.scroll = function(deltaX, deltaY) {
+                    if (arguments.length != 2) {
+                        throw new Error("Required two params")
+                    }
+
+                    _x += deltaX;
+                    _y += deltaY;
+                };
+
+                this.scale = function(scale) {
+
+                };
+            }
+
+            var tileHeight = 100,
+                tileWidth = 100,
+                tileRowCount = 34,
+                tileColumnCount = 34;
+
+            var offScreenCanvas = document.createElement('canvas');
+            offScreenCanvas.height = tileHeight * tileRowCount;
+            offScreenCanvas.width = tileWidth * tileColumnCount;
+
+            var offScreenCanvasContext = offScreenCanvas.getContext('2d');
+            for (var i = 1; i <= tileColumnCount; i++) {
+                //offScreenCanvasContext.beginPath();
+                offScreenCanvasContext.moveTo(tileWidth * i, 0);
+                offScreenCanvasContext.lineTo(tileWidth * i, tileWidth * tileColumnCount);
+                //offScreenCanvasContext.stroke();
+
+                //offScreenCanvasContext.beginPath();
+                offScreenCanvasContext.moveTo(0, tileHeight * i);
+                offScreenCanvasContext.lineTo(tileHeight * tileRowCount, tileHeight * i);
+                //offScreenCanvasContext.stroke();
+            }
+            offScreenCanvasContext.stroke();
+            offScreenCanvasContext.fillRect(1000, 1000, 100, 100);
+
+            var scale = 1,
+                offsetX = 0,
+                offsetY = 0;
+
+            var canvas = document.getElementById('canvas');
+            canvas.style.background = '#f70';
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            canvas.onmousewheel = function (event) {
+                scale += event.wheelDelta / 1000;
+                contex.clearRect(0, 0, canvas.width, canvas.height);
+                contex.drawImage(offScreenCanvas, offsetX * scale, offsetY + scale,
+                        window.innerWidth * scale, window.innerHeight * scale, 0, 0,
+                        window.innerWidth, window.innerHeight);
+
+            };
+
+            var initialX = 0,
+                initialY = 0,
+                move = false;
+
+            canvas.onmousedown = function (event) {
+                move = true;
+                initialX = event.clientX;
+                initialY = event.clientY;
+            };
+
+            canvas.onmousemove = function(event) {
+                if (!move) {
+                    return;
+                }
+                offsetX += initialX - event.clientX;
+                offsetY += initialY - event.clientY;
+                initialX = event.clientX;
+                initialY = event.clientY;
+                contex.clearRect(0, 0, canvas.width, canvas.height);
+                contex.drawImage(offScreenCanvas, (offsetX + event.clientX * scale) * scale, (offsetY + event.clientY * scale) * scale,
+                        window.innerWidth * scale, window.innerHeight * scale, 0, 0,
+                        window.innerWidth, window.innerHeight);
+            };
+
+            canvas.onmouseup = function(event) {
+                move = false;
+            };
+
+            var contex = canvas.getContext('2d');
+            contex.drawImage(offScreenCanvas, 0, 0, window.innerWidth * scale, window.innerHeight * scale, 0, 0,
+                    window.innerWidth, window.innerHeight);
+
+            /*
+            var img = new Image();
+            img.onload = function () {
+                contex.drawImage(img, 0, 0, 800, 200);
+            };
+            img.src = 'images/telegram.png';
+            */
+        })();
     </script>
 </body></html>
