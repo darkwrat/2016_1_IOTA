@@ -75,7 +75,15 @@
                     _y += deltaY;
                 };
 
-                this.scale = function(scale) {
+                this.scale = function(scale, ratioX, ratioY) {
+                    var oldWidth = _width,
+                        oldHeight = _height;
+
+                    _width *= scale;
+                    _height *= scale;
+
+                    _x += (oldWidth - _width) * ratioX;
+                    _y += (oldHeight - _height) * ratioY;
 
                 };
             }
@@ -115,10 +123,23 @@
 
             canvas.onmousewheel = function (event) {
                 scale += event.wheelDelta / 1000;
-                contex.clearRect(0, 0, canvas.width, canvas.height);
-                contex.drawImage(offScreenCanvas, offsetX * scale, offsetY + scale,
+                console.log(event.wheelDelta);
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                if (event.wheelDelta < 0) {
+                    camera.scale(0.9, event.clientX / window.innerWidth, event.clientY / window.innerHeight);
+                } else {
+                    camera.scale(1.1, event.clientX / window.innerWidth, event.clientY / window.innerHeight);
+                }
+
+
+                context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
+                        0, 0, window.innerWidth, window.innerHeight);
+
+                /*
+                context.drawImage(offScreenCanvas, (offsetX + event.clientX * scale) * scale, (offsetY + event.clientY * scale) * scale,
                         window.innerWidth * scale, window.innerHeight * scale, 0, 0,
                         window.innerWidth, window.innerHeight);
+                        */
 
             };
 
@@ -138,26 +159,39 @@
                 }
                 offsetX += initialX - event.clientX;
                 offsetY += initialY - event.clientY;
+                camera.scroll(initialX - event.clientX, initialY - event.clientY);
                 initialX = event.clientX;
                 initialY = event.clientY;
-                contex.clearRect(0, 0, canvas.width, canvas.height);
-                contex.drawImage(offScreenCanvas, (offsetX + event.clientX * scale) * scale, (offsetY + event.clientY * scale) * scale,
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
+                        0, 0, window.innerWidth, window.innerHeight);
+
+                /*
+                context.drawImage(offScreenCanvas, offsetX, offsetY,
                         window.innerWidth * scale, window.innerHeight * scale, 0, 0,
                         window.innerWidth, window.innerHeight);
+                   */
+
             };
 
             canvas.onmouseup = function(event) {
                 move = false;
             };
 
-            var contex = canvas.getContext('2d');
-            contex.drawImage(offScreenCanvas, 0, 0, window.innerWidth * scale, window.innerHeight * scale, 0, 0,
+            var context = canvas.getContext('2d');
+            var camera = new Camera(0, 0, window.innerWidth, window.innerHeight);
+            /*
+            context.drawImage(offScreenCanvas, 0, 0, window.innerWidth * scale, window.innerHeight * scale, 0, 0,
                     window.innerWidth, window.innerHeight);
-
+            */
+            context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
+                    0, 0, window.innerWidth, window.innerHeight);
             /*
             var img = new Image();
             img.onload = function () {
-                contex.drawImage(img, 0, 0, 800, 200);
+                context.drawImage(img, 0, 0, 800, 200);
             };
             img.src = 'images/telegram.png';
             */
