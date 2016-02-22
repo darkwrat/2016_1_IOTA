@@ -84,7 +84,14 @@
 
                     _x += (oldWidth - _width) * ratioX;
                     _y += (oldHeight - _height) * ratioY;
+                };
 
+                this.fill = function(ratioX, ratioY) {
+                    var tileX = _x + _width * ratioX,
+                        tileY = _y + _height * ratioY;
+                    offScreenCanvasContext.fillRect(Math.floor(tileX / 100) * 100, Math.floor(tileY / 100) * 100, 100, 100);
+                    context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
+                            0, 0, window.innerWidth, window.innerHeight);
                 };
             }
 
@@ -141,6 +148,10 @@
                         window.innerWidth, window.innerHeight);
                         */
 
+            };
+
+            canvas.onclick = function (event) {
+                camera.fill(event.clientX / window.innerWidth, event.clientY / window.innerHeight);
             };
 
             var initialX = 0,
