@@ -23,6 +23,25 @@
         */
         (function() {
 
+            function Table() {
+                var tiles = [
+                    new Card(1000, 1000, 100, 100)
+                ];
+
+                this.isCanPlace = function(x, y) {
+                    var tileX = camera.getX() + x * camera.getWidth() / window.innerWidth,
+                        tileY = camera.getY() + y * camera.getHeight() / window.innerHeight;
+                    for (var i = 0; i < tiles.length; i++) {
+                        if (tiles[i].isPointInsideRect(tileX, tileY)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+
+            var table = new Table();
+
             function Tile(width, height) {
                 if (arguments.length != 2) {
                     throw new Error("Required two params")
@@ -86,6 +105,7 @@
                     _y += (oldHeight - _height) * ratioY;
                 };
 
+                /*
                 this.fill = function(ratioX, ratioY) {
                     var tileX = _x + _width * ratioX,
                         tileY = _y + _height * ratioY;
@@ -93,6 +113,7 @@
                     context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
                             0, 0, window.innerWidth, window.innerHeight);
                 };
+                */
             }
 
             function Card(x, y, width, height) {
@@ -104,7 +125,9 @@
                     _y = y,
                     _width = width,
                     _height = height,
-                    _isInHand = true;
+                    _isInHand = true,
+                    _isCanPlace = false,
+                    _isDrawFrame = false;
 
                 this.getX = function () {
                     return _x;
@@ -148,6 +171,22 @@
                     offScreenCanvasContext.fillRect(Math.floor(tileX / 100) * 100,
                             Math.floor(tileY / 100) * 100, 100, 100);
                 };
+
+                this.isCanPlace = function () {
+                    return _isCanPlace;
+                };
+
+                this.setIsCanPlace = function(isCanPlace) {
+                    _isCanPlace = isCanPlace;
+                };
+
+                this.isDrawFrame = function () {
+                    return _isDrawFrame;
+                };
+
+                this.setIsDrawFrame = function(isDrawFrame) {
+                    _isDrawFrame = isDrawFrame;
+                }
             }
 
             function Hand(x, y) {
@@ -165,6 +204,17 @@
                     for (var i = 0; i < cards.length; i++) {
                         if (cards[i].isInHand()) {
                             context.fillRect(cards[i].getX(), cards[i].getY(), cards[i].getWidth(), cards[i].getHeight());
+                            if (cards[i].isDrawFrame()) {
+                                if (cards[i].isCanPlace()) {
+                                    console.log("can");
+                                    context.strokeStyle = '#00ff00';
+                                    context.strokeRect(cards[i].getX(), cards[i].getY(), cards[i].getWidth(), cards[i].getHeight());
+                                } else {
+                                    console.log("can not");
+                                    context.strokeStyle = '#ff0000';
+                                    context.strokeRect(cards[i].getX(), cards[i].getY(), cards[i].getWidth(), cards[i].getHeight());
+                                }
+                            }
                         }
                     }
                 };
@@ -257,6 +307,12 @@
                 if (drag) {
                     selectedCard.setX(event.clientX - selectedCard.getWidth() / 2);
                     selectedCard.setY(event.clientY - selectedCard.getHeight() / 2);
+                    selectedCard.setIsDrawFrame(true);
+                    if (table.isCanPlace(event.clientX, event.clientY)) {
+                        selectedCard.setIsCanPlace(true);
+                    } else {
+                        selectedCard.setIsCanPlace(false);
+                    }
                     redraw();
                     return;
                 }
