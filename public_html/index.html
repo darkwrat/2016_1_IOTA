@@ -95,12 +95,87 @@
                 };
             }
 
-            function Hand() {
-                this.draw = function(x, y) {
-                    context.fillRect(x - 230, y - 50, 100, 100);
-                    context.fillRect(x - 110, y - 50, 100, 100);
-                    context.fillRect(x + 130, y - 50, 100, 100);
-                    context.fillRect(x + 10, y - 50, 100, 100);
+            function Card(x, y, width, height) {
+                if (arguments.length != 4) {
+                    throw new Error("Required four args")
+                }
+
+                var _x = x,
+                    _y = y,
+                    _width = width,
+                    _height = height,
+                    _isInHand = true;
+
+                this.getX = function () {
+                    return _x;
+                };
+
+                this.setX = function(x) {
+                    _x = x;
+                };
+
+                this.getY = function () {
+                    return _y;
+                };
+
+                this.setY = function(y) {
+                    _y = y;
+                };
+
+                this.getWidth = function () {
+                    return _width;
+                };
+
+                this.getHeight = function () {
+                    return _height;
+                };
+
+                this.isPointInsideRect = function(x, y) {
+                    if (_x <= x && x <= _x + _width && _y <= y && y <= _y + _height) {
+                        return true
+                    }
+                    return false;
+                };
+
+                this.isInHand = function () {
+                    return _isInHand;
+                };
+
+                this.toTable = function (windowWidth, windowHeight) {
+                    _isInHand = false;
+                    var tileX = camera.getX() + _x * camera.getWidth() / windowWidth + _width / 2,
+                        tileY = camera.getY() + _y * camera.getHeight() / windowHeight + _height / 2;
+                    offScreenCanvasContext.fillRect(Math.floor(tileX / 100) * 100,
+                            Math.floor(tileY / 100) * 100, 100, 100);
+                };
+            }
+
+            function Hand(x, y) {
+                var _x = x,
+                    _y = y;
+
+                var cards = [
+                    new Card(x - 230, y - 50, 100, 100),
+                    new Card(x - 110, y - 50, 100, 100),
+                    new Card(x + 130, y - 50, 100, 100),
+                    new Card(x + 10, y - 50, 100, 100)
+                ];
+
+                this.draw = function () {
+                    for (var i = 0; i < cards.length; i++) {
+                        if (cards[i].isInHand()) {
+                            context.fillRect(cards[i].getX(), cards[i].getY(), cards[i].getWidth(), cards[i].getHeight());
+                        }
+                    }
+                };
+
+                this.getCard = function(x, y) {
+                    for (var i = 0; i < cards.length; i++) {
+                        if (cards[i].isPointInsideRect(x, y) && cards[i].isInHand()) {
+                            return cards[i];
+                        }
+                    }
+                    return null;
                 };
             }
 
@@ -153,7 +228,7 @@
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
                         0, 0, window.innerWidth, window.innerHeight);
-                hand.draw(window.innerWidth / 2, window.innerHeight - 100);
+                hand.draw();
             }
 
             canvas.onclick = function (event) {
@@ -162,15 +237,29 @@
 
             var initialX = 0,
                 initialY = 0,
-                move = false;
+                move = false,
+                selectedCard,
+                drag = false;
 
             canvas.onmousedown = function (event) {
+                selectedCard = hand.getCard(event.clientX, event.clientY);
+                if (selectedCard != null) {
+                    drag = true;
+                    console.log("dragged");
+                    return;
+                }
                 move = true;
                 initialX = event.clientX;
                 initialY = event.clientY;
             };
 
             canvas.onmousemove = function(event) {
+                if (drag) {
+                    selectedCard.setX(event.clientX - selectedCard.getWidth() / 2);
+                    selectedCard.setY(event.clientY - selectedCard.getHeight() / 2);
+                    redraw();
+                    return;
+                }
                 if (!move) {
                     return;
                 }
@@ -184,13 +273,19 @@
 
             canvas.onmouseup = function(event) {
                 move = false;
+                if (drag) {
+                    drag = false;
+                    selectedCard.toTable(window.innerWidth, window.innerHeight);
+                    redraw();
+                }
             };
 
             var context = canvas.getContext('2d');
             var camera = new Camera(0, 0, window.innerWidth, window.innerHeight);
-            var hand = new Hand();
+            var hand = new Hand(window.innerWidth / 2, window.innerHeight - 100);
 
             redraw();
+
             /*
             var img = new Image();
             img.onload = function () {
