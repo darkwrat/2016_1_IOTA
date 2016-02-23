@@ -95,6 +95,15 @@
                 };
             }
 
+            function Hand() {
+                this.draw = function(x, y) {
+                    context.fillRect(x - 230, y - 50, 100, 100);
+                    context.fillRect(x - 110, y - 50, 100, 100);
+                    context.fillRect(x + 130, y - 50, 100, 100);
+                    context.fillRect(x + 10, y - 50, 100, 100);
+                };
+            }
+
             var tileHeight = 100,
                 tileWidth = 100,
                 tileRowCount = 34,
@@ -137,21 +146,18 @@
                 } else {
                     camera.scale(1.1, event.clientX / window.innerWidth, event.clientY / window.innerHeight);
                 }
-
-
-                context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
-                        0, 0, window.innerWidth, window.innerHeight);
-
-                /*
-                context.drawImage(offScreenCanvas, (offsetX + event.clientX * scale) * scale, (offsetY + event.clientY * scale) * scale,
-                        window.innerWidth * scale, window.innerHeight * scale, 0, 0,
-                        window.innerWidth, window.innerHeight);
-                        */
-
+                redraw();
             };
 
+            function redraw() {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
+                        0, 0, window.innerWidth, window.innerHeight);
+                hand.draw(window.innerWidth / 2, window.innerHeight - 100);
+            }
+
             canvas.onclick = function (event) {
-                camera.fill(event.clientX / window.innerWidth, event.clientY / window.innerHeight);
+                //camera.fill(event.clientX / window.innerWidth, event.clientY / window.innerHeight);
             };
 
             var initialX = 0,
@@ -173,18 +179,7 @@
                 camera.scroll(initialX - event.clientX, initialY - event.clientY);
                 initialX = event.clientX;
                 initialY = event.clientY;
-
-                context.clearRect(0, 0, canvas.width, canvas.height);
-
-                context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
-                        0, 0, window.innerWidth, window.innerHeight);
-
-                /*
-                context.drawImage(offScreenCanvas, offsetX, offsetY,
-                        window.innerWidth * scale, window.innerHeight * scale, 0, 0,
-                        window.innerWidth, window.innerHeight);
-                   */
-
+                redraw();
             };
 
             canvas.onmouseup = function(event) {
@@ -193,12 +188,9 @@
 
             var context = canvas.getContext('2d');
             var camera = new Camera(0, 0, window.innerWidth, window.innerHeight);
-            /*
-            context.drawImage(offScreenCanvas, 0, 0, window.innerWidth * scale, window.innerHeight * scale, 0, 0,
-                    window.innerWidth, window.innerHeight);
-            */
-            context.drawImage(offScreenCanvas, camera.getX(), camera.getY(), camera.getWidth(), camera.getHeight(),
-                    0, 0, window.innerWidth, window.innerHeight);
+            var hand = new Hand();
+
+            redraw();
             /*
             var img = new Image();
             img.onload = function () {
@@ -206,6 +198,7 @@
             };
             img.src = 'images/telegram.png';
             */
+
         })();
     </script>
 </body></html>
