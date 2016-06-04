@@ -119,7 +119,7 @@ var urlsToCache = [
     '/js/views/main_auth.js',
     '/js/views/manager.js',
     '/js/views/manager.test.js',
-    '/js/views/reg.js',
+    // '/js/views/reg.js',
     '/js/views/reg_auth.js',
     '/js/views/scoreboard.js',
     '/js/views/scoreboard_item.js'

@@ -1,5 +1,25 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <div id="header" class="grid__str_1 main__head" style = "background-color:#e26d5c;">
-        <img class = "grid__col-offset_2" src = "/images/logo.png" style="height:100%"></img>
-    </div>
+    <!--<div id="header" class="grid__str_1 main__head" style = "background-color:#e26d5c;">-->
+    <!--<img class = "grid__col-offset_2" src = "/images/logo.png" style="height:100%"></img>-->
+    <!--</div>-->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <i class="glyphicon glyphicon-knight"></i>
+                    iota game
+                </a>
+            </div>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-link" data-toggle="button">
+                            <i class="glyphicon glyphicon-paperclip"></i>
+                            Правила игры
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
 </fest:template>

@@ -1,18 +1,47 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
     <fest:include src="./header.xml"/>
-    <div class="grid__col_12 grid__str_9">
-        <div class="grid__str_2"></div>
-        <div class = "grid__col_4 grid__col-offset_4 block__border">
-            <a class = "button button__disabled grid__col-offset_4" disabled = ''>Вход</a>
-            <a class = "button button__active" href="#registration">Регистрация</a>
-            <form class="js-submit">
-                <div class="js-alert"></div>
-                <input name="login" type="text" id="inputLogin" class="js-login form__control" placeholder="Логин"
-                       required="" autofocus=""/>
-                <input name="password" type="password" id="inputPassword" class="js-password form__control"
-                       placeholder="Пароль" required=""/>
-                <button class="button button__check button__lg grid__col-offset_4" type="submit">Вход</button>
-            </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#" role="tab"
+                                                                      data-toggle="tab">Вход</a></li>
+                            <li role="presentation"><a href="#registration">Регистрация</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active panel-body">
+                                <div class="js-alert"></div>
+                                <form class="form-horizontal js-submit">
+                                    <div class="form-group">
+                                        <label for="inputLogin" class="col-sm-2 control-label">Логин</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control js-login" id="inputLogin" placeholder="johndoe"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword" class="col-sm-2 control-label">Пароль</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control js-password" id="inputPassword"
+                                                   placeholder="password"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-log-in"></i> Войти</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </fest:template>

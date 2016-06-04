@@ -1,69 +1,69 @@
-.block {
-  padding: 10px; }
-  .block__jumbotron {
-    padding: 10px;
-    margin-bottom: 30px;
-    color: inherit;
-    background-color: #eee; }
-  .block__border {
-    border: 4px double black; }
+/*.block {*/
+  /*padding: 10px; }*/
+  /*.block__jumbotron {*/
+    /*padding: 10px;*/
+    /*margin-bottom: 30px;*/
+    /*color: inherit;*/
+    /*background-color: #eee; }*/
+  /*.block__border {*/
+    /*border: 4px double black; }*/
 
 .hidden {
   display: none; }
 
-.button {
-  align-items: flex-start;
-  text-align: center;
-  cursor: default;
-  box-sizing: border-box;
-  border-width: 2px;
-  border-style: outset;
-  border-color: buttonface;
-  text-rendering: auto;
-  letter-spacing: normal;
-  word-spacing: normal;
-  display: inline-block;
-  margin-top: 10px; }
-  .button__active {
-    font-weight: 700;
-    color: white;
-    text-decoration: none;
-    padding: 3px;
-    border-radius: 3px;
-    background: #7D869C;
-    box-shadow: 0 -3px #50799B inset;
-    transition: 0.2s; }
-    .button__active:hover {
-      background: #50799B; }
-    .button__active:active {
-      background: #6293BC;
-      box-shadow: 0 3px #6293BC inset; }
-  .button__disabled {
-    font-weight: 700;
-    color: black;
-    text-decoration: none;
-    padding: 3px;
-    background: #E6EAE3; }
-  .button__check {
-    font-weight: 700;
-    color: white;
-    text-decoration: none;
-    padding: 3px;
-    background: #723d46;
-    border: 2px solid black;
-    box-shadow: -2px -2px #000 inset;
-    transition: 0.2s;
-    font-size: 20px; }
-    .button__check:hover {
-      background: #50799B; }
-    .button__check:active {
-      background: #6293BC;
-      box-shadow: 0 3px #6293BC inset; }
-  .button__lg {
-    text-align: center;
-    vertical-align: middle;
-    height: 50px;
-    width: 150px; }
+/*.button {*/
+  /*align-items: flex-start;*/
+  /*text-align: center;*/
+  /*cursor: default;*/
+  /*box-sizing: border-box;*/
+  /*border-width: 2px;*/
+  /*border-style: outset;*/
+  /*border-color: buttonface;*/
+  /*text-rendering: auto;*/
+  /*letter-spacing: normal;*/
+  /*word-spacing: normal;*/
+  /*display: inline-block;*/
+  /*margin-top: 10px; }*/
+  /*.button__active {*/
+    /*font-weight: 700;*/
+    /*color: white;*/
+    /*text-decoration: none;*/
+    /*padding: 3px;*/
+    /*border-radius: 3px;*/
+    /*background: #7D869C;*/
+    /*box-shadow: 0 -3px #50799B inset;*/
+    /*transition: 0.2s; }*/
+    /*.button__active:hover {*/
+      /*background: #50799B; }*/
+    /*.button__active:active {*/
+      /*background: #6293BC;*/
+      /*box-shadow: 0 3px #6293BC inset; }*/
+  /*.button__disabled {*/
+    /*font-weight: 700;*/
+    /*color: black;*/
+    /*text-decoration: none;*/
+    /*padding: 3px;*/
+    /*background: #E6EAE3; }*/
+  /*.button__check {*/
+    /*font-weight: 700;*/
+    /*color: white;*/
+    /*text-decoration: none;*/
+    /*padding: 3px;*/
+    /*background: #723d46;*/
+    /*border: 2px solid black;*/
+    /*box-shadow: -2px -2px #000 inset;*/
+    /*transition: 0.2s;*/
+    /*font-size: 20px; }*/
+    /*.button__check:hover {*/
+      /*background: #50799B; }*/
+    /*.button__check:active {*/
+      /*background: #6293BC;*/
+      /*box-shadow: 0 3px #6293BC inset; }*/
+  /*.button__lg {*/
+    /*text-align: center;*/
+    /*vertical-align: middle;*/
+    /*height: 50px;*/
+    /*width: 150px; }*/
 
 /*.button {
   display: inline-block;
@@ -486,13 +486,14 @@
   width: 45%;
   content: url("/images/loader.svg"); }
 
-.main {
-  margin: 0;
-  align: center; }
-  .main__head {
-    background-color: #e26d5c; }
-  .main__body {
-    background-color: #ffe1a8; }
+/*.main {*/
+  /*margin: 0;*/
+  /*align: center; }*/
+  /*.main__head {*/
+    /*background-color: #e26d5c; }*/
+  /*.main__body {*/
+    /*background-color: #ffe1a8;*/
+    /*}*/
 
 .boomark {
   width: 640px;
@@ -657,12 +658,12 @@
 #confirmBox .gray:hover span {
   background-position: -395px bottom; }
 
-a, a:visited {
-  text-decoration: underline;
-  outline: none;
-  color: #97CAE6; }
+/*a, a:visited {*/
+  /*text-decoration: underline;*/
+  /*outline: none;*/
+  /*color: #97CAE6; }*/
 
-a:hover {
-  text-decoration: none; }
+/*a:hover {*/
+  /*text-decoration: none; }*/
 
 /*# sourceMappingURL=sass.css.map */

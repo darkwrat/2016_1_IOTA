@@ -9,7 +9,7 @@ define(function (require) {
     var GameAuthView = BaseView.extend({
 
         template: tmpl,
-        attributes: {class: "grid__str_10"},
+        // attributes: {class: "grid__str_10"},
         isFirst: true,
         events: {
             'click .js-exit': 'exit',

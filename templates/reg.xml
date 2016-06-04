@@ -1,25 +1,85 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
     <fest:include src="./header.xml"/>
-    <div class="grid__col_12 grid__str_9">
-        <div class="grid__str_2"></div>
-        <div class = "grid__col_4 grid__col-offset_4 block__border">
-            <a class = "button button__active grid__col-offset_4"  href="#" >Вход</a>
-            <a class = "button button__disabled" disabled = ''>Регистрация</a>
-            <div class="js-alert"></div>
-            <form class="js-submit">
 
-                <input required="" type="text" class="js-login form__control" name="login" id="name"
-                           placeholder="Логин"/>
-                <input required="" type="email" class="js-email form__control" name="email" id="email"
-                       placeholder="Email"/>
-                <input required="" type="date" class="js-bday form__control" name="bday" id="bday"
-                           placeholder="День рождения"/>
-                <input required="" type="password" class="js-password form__control" name="password" id="passwd"
-                           placeholder="Пароль"/>
-                <input required="" type="password" class="js-password2 form__control" name="confirm_password"
-                       id="confpasswd" placeholder="Подтвердите пароль"/>
-                <button class="button button__check button__lg grid__col-offset_4" type="submit">Регистрация</button>
-            </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation"><a href="#" role="tab" data-toggle="tab">Вход</a></li>
+                            <li role="presentation" class="active"><a href="#register" role="tab" data-toggle="tab">Регистрация</a>
+                            </li>
+                        </ul>
+                            <div role="tabpanel" class="tab-pane fade in active panel-body">
+                                <div class="js-alert"></div>
+
+                                <form class="form-horizontal js-submit">
+                                    <div class="form-group">
+                                        <label for="inputLoginReg" class="col-sm-4 control-label">Логин</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control js-login" id="inputLoginReg" placeholder="johndoe"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmailReg" class="col-sm-4 control-label">Пароль</label>
+                                        <div class="col-sm-8">
+                                            <input type="email" class="form-control js-email" id="inputEmailReg"
+                                                   placeholder="john.doe@example.com"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPasswordReg" class="col-sm-4 control-label">Пароль</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control js-password" id="inputPasswordReg"
+                                                   placeholder="password"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPasswordConfirmReg" class="col-sm-4 control-label">Повтор пароля</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control js-password2" id="inputPasswordConfirmReg"
+                                                   placeholder="password"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-log-in"></i> Зарегистрироваться</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+
+
+    <!--<div class="grid__col_12 grid__str_9">-->
+        <!--<div class="grid__str_2"></div>-->
+        <!--<div class = "grid__col_4 grid__col-offset_4 block__border">-->
+            <!--<a class = "button button__active grid__col-offset_4"  href="#" >Вход</a>-->
+            <!--<a class = "button button__disabled" disabled = ''>Регистрация</a>-->
+            <!--<div class="js-alert"></div>-->
+            <!--<form class="js-submit">-->
+
+                <!--<input required="" type="text" class="js-login form__control" name="login" id="name"-->
+                           <!--placeholder="Логин"/>-->
+                <!--<input required="" type="email" class="js-email form__control" name="email" id="email"-->
+                       <!--placeholder="Email"/>-->
+                <!--<input required="" type="date" class="js-bday form__control" name="bday" id="bday"-->
+                           <!--placeholder="День рождения"/>-->
+                <!--<input required="" type="password" class="js-password form__control" name="password" id="passwd"-->
+                           <!--placeholder="Пароль"/>-->
+                <!--<input required="" type="password" class="js-password2 form__control" name="confirm_password"-->
+                       <!--id="confpasswd" placeholder="Подтвердите пароль"/>-->
+                <!--<button class="button button__check button__lg grid__col-offset_4" type="submit">Регистрация</button>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
 </fest:template>

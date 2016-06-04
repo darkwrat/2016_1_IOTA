@@ -1,41 +1,72 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <div id="header" class="grid__str_1 main__head" style = "background-color:#e26d5c;">
-        <img class = "grid__col-offset_2" src = "/images/logo.png" style="height:100%"></img>
-        <button class="js-over" type="submit">Конец хода</button>
-
-        <button class="js-exit" type="submit">Выход</button>
-
-        <button class="js-pass" type="submit">Заменить карточки</button>
-
-        <button class="js-debugConclude" type="submit">debug_conclude</button>
-    </div>
-
-    <img id="loader" src="/images/ajax-loader.gif" class = "grid__str-offset-4 grid__col-offset_5" style="position:absolute"></img>
-    <div  class = "grid__container grid__str_9">
-        <div id = "myModal" class="modal fade js-modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
+    <nav class="navbar navbar-default" style="margin-bottom:0">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <i class="glyphicon glyphicon-knight"></i>
+                    iota game
+                </a>
+            </div>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-link" data-toggle="button">
+                            <i class="glyphicon glyphicon-paperclip"></i>
+                            Правила игры
+                        </button>
                     </div>
-                    <div class="modal-body">
-                        <p class="js-alert"></p>
-                        <p class="js-gamer1"></p>
-                        <p class="js-gamer2"></p>
-                        <p class="js-gamer3"></p>
-                        <p class="js-gamer4"></p>
+                </div>
+            </form>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-md btn-success js-over">
+                            <i class="glyphicon glyphicon-ok"></i>
+                            Завершить ход
+                        </button>
+                        <button type="button" class="btn btn-md btn-primary js-pass">
+                            <i class="glyphicon glyphicon-transfer"></i>
+                            Заменить карты
+                        </button>
+                        <button type="button" class="btn btn-md btn-warning js-debugConclude">
+                            <i class="glyphicon glyphicon glyphicon-hourglass"></i>
+                        </button>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Остаться на поле</button>
-                        <button type="button" class="btn btn-primary js-exit">Покинуть игру</button>
+                </div>
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-md btn-danger js-over" data-toggle="button">
+                            <i class="glyphicon glyphicon-log-out"></i>
+                            Закончить игру
+                        </button>
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        <div class = "grid__col_12 grid__str_10">
-            <canvas id="canvas" class="grid__str_10 grid__col_12" style="position:absolute;overflow: hidden;z-index: 1000;"></canvas>
-            <div class = "grid__str_8"></div>
+                </div>
+            </form>
         </div>
-    </div>
+    </nav>
+
+    <img id="loader" src="/images/ajax-loader.gif" class="grid__str-offset-4 grid__col-offset_5"
+         style="position:absolute"></img>
+    <div id="myModal" class="modal fade js-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="js-alert"></p>
+                    <p class="js-gamer1"></p>
+                    <p class="js-gamer2"></p>
+                    <p class="js-gamer3"></p>
+                    <p class="js-gamer4"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Остаться на поле</button>
+                    <button type="button" class="btn btn-primary js-exit">Покинуть игру</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <canvas id="canvas" style="position:absolute;overflow: hidden;z-index: 1000;width:100%;height:100%;"></canvas>
 
 </fest:template>

@@ -8,7 +8,7 @@ define(function (require) {
     var MainView = BaseView.extend({
 
         template: tmpl,
-        attributes: {class: "grid__str_10"},
+        // attributes: {class: "grid__str_10"},
 
         events: {
             'submit .js-submit': 'login'

@@ -1,13 +1,17 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
     <fest:include src="./header.xml"/>
-    <div class="grid__row">
-        <div class="grid__col_4 grid__col-offset_4">
-            <div class="button__group button__group_vertical" role="group">
-                <a type="button" class="button button__check button__lg grid__col-offset_4" href="/#game">Старт</a>
-                <br/>
-                <a type="button" class="button button__check button__lg grid__col-offset_4" href="/#scoreboard">Рекорды</a>
-                <br/>
-                <a type="button" class="button button__check button__lg grid__col-offset_4" href="/#logout">Выход</a>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="/#game" class="btn btn-primary btn-lg btn-block"><i class="glyphicon glyphicon-play"></i> Начать игру</a>
+                        <a href="/#scoreboard" class="btn btn-primary btn-lg btn-block"><i class="glyphicon glyphicon-stats"></i> Просмотреть лучшие результаты</a>
+                        <a href="/#logout" class="btn btn-primary btn-lg btn-block"><i class="glyphicon glyphicon-log-out"></i> Выйти</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
