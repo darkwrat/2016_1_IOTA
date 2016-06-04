@@ -46,6 +46,7 @@ define(function (require) {
                 _this.isScroll = false;
                 if (_this.isDrag) {
                     _this.isDrag = false;
+                    //noinspection JSDuplicatedDeclaration
                     var update = _this.table.placeCard(_this.selectedCard, _this.camera, _this.canvas);
                     //console.log(JSON.stringify(update));
                     _this.selectedCard.setX(_this.initX);
@@ -60,6 +61,7 @@ define(function (require) {
                 }
                 if(_this.isPass) {
                     if (_this.selectedCard != null) {
+                        //noinspection JSDuplicatedDeclaration
                         var update = {uuid: _this.selectedCard.getUuid(), card:_this.selectedCard};
                         document.dispatchEvent(new CustomEvent('cardPass', { detail: update}));
                     }

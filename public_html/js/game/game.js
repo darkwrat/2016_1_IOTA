@@ -20,7 +20,8 @@ define(function (require) {
             score4 = new Score(10, 160, scoreWidth, 100, "", 0);
 
         $('#loader').hide();
-        $('#canvas').show();
+        var canvasEl = $('#canvas');
+        canvasEl.show();
 
         var TABLE_SIZE = 3400;
         var offScreenCanvas = document.createElement('canvas'),
@@ -28,8 +29,8 @@ define(function (require) {
             screenCanvas = document.getElementById('canvas');
         var prevPlayer = -1;
 
-        screenCanvas.width = $('#canvas').width();
-        screenCanvas.height = $('#canvas').height();
+        screenCanvas.width = canvasEl.width();
+        screenCanvas.height = canvasEl.height();
 
         var table = new Table(34, 34, 100, 100),
             hand = new Hand(screenCanvas);
@@ -41,14 +42,24 @@ define(function (require) {
         offScreenRenderer.addDrawable(table);
         offScreenRenderer.render();
 
-        var screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+        var screenRenderer = new ScreenRenderer(screenCanvas,
+            new Camera(offScreenCanvas,
+                TABLE_SIZE / 2 - canvasEl.width() / 2,
+                TABLE_SIZE / 2 - canvasEl.height() / 2,
+                canvasEl.width(), canvasEl.height()),
+            table, offScreenRenderer, hand);
         addScore(screenRenderer);
 
-        window.onresize = function(e) {
-            screenCanvas.width = $('#canvas').width();
-            screenCanvas.height = $('#canvas').height();
+        window.onresize = function (e) {
+            screenCanvas.width = canvasEl.width();
+            screenCanvas.height = canvasEl.height();
             delete screenRenderer;
-            screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+            screenRenderer = new ScreenRenderer(screenCanvas,
+                new Camera(offScreenCanvas,
+                    TABLE_SIZE / 2 - canvasEl.width() / 2,
+                    TABLE_SIZE / 2 - canvasEl.height() / 2,
+                    canvasEl.width(), canvasEl.height()
+                ), table, offScreenRenderer, hand);
             addScore(screenRenderer);
             hand.reSize();
             document.dispatchEvent(new CustomEvent('toRender'));
@@ -69,9 +80,9 @@ define(function (require) {
             gameModel.set('endSequence', true, {silent: true});
             gameModel.set('goodbye', true, {silent: true});
             gameModel.set('__type', "PlayerPingMessage", {silent: true});
-            gameModel.save([],{
-                success: function(model, response, options) {
-                    if(response.__ok) {
+            gameModel.save([], {
+                success: function (model, response, options) {
+                    if (response.__ok) {
                         hand.clear();
                         table.clear();
                         $('#loader').show();
@@ -100,8 +111,8 @@ define(function (require) {
             gameModel.set('endSequence', true, {silent: true});
             gameModel.set('goodbye', false, {silent: true});
             gameModel.set('__type', "PlayerPingMessage", {silent: true});
-            gameModel.save([],{
-                success: function(model, response, options) {
+            gameModel.save([], {
+                success: function (model, response, options) {
                     //console.log("success");
                 }
             });
@@ -113,11 +124,11 @@ define(function (require) {
             gameModel.set('goodbye', false, {silent: true});
             gameModel.set('__type', "PlayerPassCardMessage", {silent: true});
             gameModel.set('uuid', event.detail.uuid, {silent: true});
-            gameModel.save([],{
-                success: function(model, response, options) {
-                    if(response.__ok) {
+            gameModel.save([], {
+                success: function (model, response, options) {
+                    if (response.__ok) {
                         document.dispatchEvent(new CustomEvent('toRender'));
-                        $('.js-pass').attr('disabled','');
+                        $('.js-pass').attr('disabled', '');
                     }
                 }
             });
@@ -131,14 +142,14 @@ define(function (require) {
             gameModel.set('uuid', event.detail.uuid, {silent: true});
             gameModel.set('offX', event.detail.x - 16, {silent: true});
             gameModel.set('offY', event.detail.y - 16, {silent: true});
-            gameModel.save([],{
-                success: function(model, response, options) {
-                    if(!response.__ok) {
+            gameModel.save([], {
+                success: function (model, response, options) {
+                    if (!response.__ok) {
                         event.detail.card.setInHand(true);
                         event.detail.card.setHighlightColor("black");
                         document.dispatchEvent(new CustomEvent('toRender'));
                     } else {
-                        $('.js-pass').attr('disabled','');
+                        $('.js-pass').attr('disabled', '');
                     }
                 }
             });
@@ -148,25 +159,29 @@ define(function (require) {
             $('.modal-header').text("Вы уверены?");
             $('.modal-body').text("В случае выхода, вы проиграете...");
         });
-        gameModel.on('endGame', function() {
+        gameModel.on('endGame', function () {
             $('#myModal').modal('show');
             $('.modal-header').text("Игра окончена!");
             $('.modal-body').find('.js-alert').text("");
             var gamers = [];
-            var sortFun = function(a, b) {
-                if(a.score > b.score) return -1;
+            var sortFun = function (a, b) {
+                if (a.score > b.score) return -1;
                 else return 1;
             };
-            for(i = 0; i < gameModel.message.players.length; i++)
-                gamers.push({name: gameModel.message.players[i].login, score: gameModel.message.players[i].score, isMe: (gameModel.message.players[i].ref == user.get("ref"))});
+            for (i = 0; i < gameModel.message.players.length; i++)
+                gamers.push({
+                    name: gameModel.message.players[i].login,
+                    score: gameModel.message.players[i].score,
+                    isMe: (gameModel.message.players[i].ref == user.get("ref"))
+                });
             console.log(gamers);
             gamers.sort(sortFun);
             console.log(gamers);
-            for(i = 1; i != gamers.length + 1; i++) {
-                var text = "" + i + ". " + gamers[i-1].name + ": " + gamers[i-1].score;
+            for (i = 1; i != gamers.length + 1; i++) {
+                var text = "" + i + ". " + gamers[i - 1].name + ": " + gamers[i - 1].score;
                 console.log(text);
                 $('.modal-body').find('.js-gamer' + i).text(text);
-                if(gamers[i-1].isMe) $('.modal-body').find('.js-gamer' + i).addClass("text__temporary");
+                if (gamers[i - 1].isMe) $('.modal-body').find('.js-gamer' + i).addClass("text__temporary");
             }
         });
         gameModel.on('mess', function () {
@@ -178,11 +193,11 @@ define(function (require) {
             var isChangePlayer = (true);//prevPlayer != message.ref)
             prevPlayer = message.ref;
             table.setStep(user.get('ref') == message.ref);
-            if(table.getStep() && isChangePlayer)
+            if (table.getStep() && isChangePlayer)
                 $('.js-pass').removeAttr('disabled');
             else
                 $('.js-pass').attr('disabled', '');
-            if(table.getStep()) $('.js-over').removeAttr('disabled');
+            if (table.getStep()) $('.js-over').removeAttr('disabled');
             else $('.js-over').attr('disabled', '');
             var i = 0;
             var j = 0;
@@ -196,21 +211,21 @@ define(function (require) {
                 score3.update("", 0);
             }
 
-            for(j = 0; j < message.players.length; j++) {
+            for (j = 0; j < message.players.length; j++) {
                 tempPlayer = message.players[j];
 
                 /*
-                if(!$('div').is('#' + tempPlayer.ref)) {
-                    $('.js-gamer' + player).show();
-                    $('.js-gamer' + player).attr("id", tempPlayer.ref);
-                    $('.js-gamer' + player).find('.text__nick').text(tempPlayer.login);
-                    player++;
-                }
-                if(message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
-                else $('#' + tempPlayer.ref).removeClass("text__temporary");
+                 if(!$('div').is('#' + tempPlayer.ref)) {
+                 $('.js-gamer' + player).show();
+                 $('.js-gamer' + player).attr("id", tempPlayer.ref);
+                 $('.js-gamer' + player).find('.text__nick').text(tempPlayer.login);
+                 player++;
+                 }
+                 if(message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
+                 else $('#' + tempPlayer.ref).removeClass("text__temporary");
 
-                $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
-                */
+                 $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
+                 */
 
 
                 var isTurnPlayer = (message.ref === tempPlayer.ref);
@@ -231,18 +246,26 @@ define(function (require) {
                         break;
                 }
 
-                if(tempPlayer.ref == user.get('ref')) {
+                if (tempPlayer.ref == user.get('ref')) {
                     var cardHand = [];
-                    for(i = 0; i < tempPlayer.hand.length; i++) {
+                    for (i = 0; i < tempPlayer.hand.length; i++) {
                         cardPull = tempPlayer.hand[i];
                         //console.log(JSON.stringify(cardPull));
-                        if(cardPull.concrete) {
+                        if (cardPull.concrete) {
                             cardPullNumber = "1";
                             switch (cardPull.number) {
-                                case "ONE": cardPullNumber = "1"; break;
-                                case "TWO": cardPullNumber = "2"; break;
-                                case "THREE": cardPullNumber = "3"; break;
-                                case "FOUR": cardPullNumber = "4"; break;
+                                case "ONE":
+                                    cardPullNumber = "1";
+                                    break;
+                                case "TWO":
+                                    cardPullNumber = "2";
+                                    break;
+                                case "THREE":
+                                    cardPullNumber = "3";
+                                    break;
+                                case "FOUR":
+                                    cardPullNumber = "4";
+                                    break;
                             }
                             cardHand.push(new CardResponse(0, 0, cardPullNumber, cardPull.color[0].toLowerCase(), cardPull.shape[0].toLowerCase(), "", cardPull.uuid, cardPull.passed));
                         } else {
@@ -253,16 +276,24 @@ define(function (require) {
                 }
             }
 
-            for(i = 0; i < message.field.length; i++) {
+            for (i = 0; i < message.field.length; i++) {
                 cardPull = message.field[i];
                 //console.log(JSON.stringify(cardPull));
-                if(cardPull.item.concrete) {
+                if (cardPull.item.concrete) {
                     cardPullNumber = "1";
                     switch (cardPull.item.number) {
-                        case "ONE": cardPullNumber = "1"; break;
-                        case "TWO": cardPullNumber = "2"; break;
-                        case "THREE": cardPullNumber = "3"; break;
-                        case "FOUR": cardPullNumber = "4"; break;
+                        case "ONE":
+                            cardPullNumber = "1";
+                            break;
+                        case "TWO":
+                            cardPullNumber = "2";
+                            break;
+                        case "THREE":
+                            cardPullNumber = "3";
+                            break;
+                        case "FOUR":
+                            cardPullNumber = "4";
+                            break;
                     }
                     table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, cardPullNumber, cardPull.item.color[0].toLowerCase(), cardPull.item.shape[0].toLowerCase(), "", cardPull.item.uuid, cardPull.item.passed)]);
                 } else {

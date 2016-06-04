@@ -14,8 +14,9 @@ define(function (require) {
         }
 
         Camera.prototype.toCenter = function () {
-            this.x = this.world.width / 2 - $('#canvas').width() / 2;
-            this.y = this.world.height / 2 - $('#canvas').height() / 2;
+            var canvasEl = $('#canvas');
+            this.x = this.world.width / 2 - canvasEl.width() / 2;
+            this.y = this.world.height / 2 - canvasEl.height() / 2;
         };
 
         Camera.prototype.scale = function (scale, clientX, clientY) {

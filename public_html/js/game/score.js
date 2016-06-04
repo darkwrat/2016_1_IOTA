@@ -26,13 +26,15 @@ define(function (require) {
                 return;
             }
             var context = canvas.getContext('2d');
-            context.font = "18px Verdana";
+            context.font = "21px Courier New";
             if (this.isCurrentPlayer) {
                 context.font = "bold " + context.font;
             }
             var printName = this.name;
             if (this.isTurnPlayer) {
-                printName = "\u00BB " + printName;
+                printName = "-> " + printName;
+            } else {
+                printName = "   " + printName;
             }
             context.fillText(printName + ': ' + this.score, this.x, this.y, this.width);
         };

@@ -40,11 +40,12 @@ define(function (require) {
         };
 
         Hand.prototype.update = function (cards) {
+            var delta = (this.canvas.width / 2 - (60 + heightCard)) / 2;
             var coord = [
-                [this.canvas.width - 15 - heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 30 - 2 * heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 45 - 3 * heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 60 - 4 * heightCard, this.canvas.height - heightCard - 10]
+                [this.canvas.width / 2 + delta - (15 + heightCard), this.canvas.height - heightCard - 10],
+                [this.canvas.width / 2 + delta - (30 + 2 * heightCard), this.canvas.height - heightCard - 10],
+                [this.canvas.width / 2 + delta - (45 + 3 * heightCard), this.canvas.height - heightCard - 10],
+                [this.canvas.width / 2 + delta - (60 + 4 * heightCard), this.canvas.height - heightCard - 10]
             ];
             //delete this.drawables;
             for (var i = 0; i < cards.length; i++) {
@@ -64,9 +65,10 @@ define(function (require) {
         };
 
         Hand.prototype.reSize = function () {
-            heightCard = $('#canvas').height() / 6;
-            this.canvas.width = $('#canvas').width();
-            this.canvas.height = $('#canvas').height()
+            var canvasEl = $('#canvas');
+            heightCard = canvasEl.height() / 6;
+            this.canvas.width = canvasEl.width();
+            this.canvas.height = canvasEl.height()
         };
 
         return Hand;

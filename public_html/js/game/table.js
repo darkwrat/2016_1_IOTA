@@ -26,8 +26,8 @@ define(function (require) {
         Table.prototype.draw = function (canvas) {
             var context = canvas.getContext("2d");
             var gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, canvas.height / 10, 0, canvas.height / 2, canvas.width);
-            gradient.addColorStop(0, "white");
-            gradient.addColorStop(1, "gray");
+            gradient.addColorStop(0, "#eef2f3");
+            gradient.addColorStop(1, "#8e9eab");
             context.fillStyle = gradient;
             context.fillRect(0, 0, canvas.width, canvas.height);
             for (var i = 0; i < this.drawables.length; i++) {
@@ -83,7 +83,7 @@ define(function (require) {
         };
 
         Table.prototype.clear = function () {
-            for(i = 0; i < 34 * 34; i++)
+            for (i = 0; i < 34 * 34; i++)
                 this.drawables[i].unsetContent();
         };
 

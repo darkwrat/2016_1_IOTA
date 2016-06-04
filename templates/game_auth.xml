@@ -5,7 +5,7 @@
 
         <button class="js-exit" type="submit">Выход</button>
 
-        <button class="js-pass" type="submit">Пасс</button>
+        <button class="js-pass" type="submit">Заменить карточки</button>
 
         <button class="js-debugConclude" type="submit">debug_conclude</button>
     </div>
@@ -26,13 +26,13 @@
                         <p class="js-gamer4"></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Вернуться</button>
-                        <button type="button" class="btn btn-primary js-exit">Выход</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Остаться на поле</button>
+                        <button type="button" class="btn btn-primary js-exit">Покинуть игру</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <div class = "grid__col_9 grid__str_10">
+        <div class = "grid__col_12 grid__str_10">
             <canvas id="canvas" class="grid__str_10 grid__col_12" style="position:absolute;overflow: hidden;z-index: 1000;"></canvas>
             <div class = "grid__str_8"></div>
         </div>
