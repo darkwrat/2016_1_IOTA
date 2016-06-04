@@ -9,16 +9,14 @@ define(function (require) {
         url: '/api/game',
         message: "",
         initialize: function () {
-            this.listenToOnce(socket, 'message', function (data) {
-                this.trigger("ready");
-            });
             this.listenTo(socket, 'message', function (data) {
-                //console.log(data);
-                data = JSON.parse(data);
-                console.log('Обновление модели');
-                this.message = data;
-                console.log();
-                this.trigger("mess");
+                this.message = JSON.parse(data);
+                this.trigger("ready");
+                if(this.message.concluded) {
+                    this.trigger("endGame");
+                    this.trigger("mess");
+                }
+                else this.trigger("mess");
             });
         },
 

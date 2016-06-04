@@ -49,7 +49,6 @@ define(function (require) {
             //delete this.drawables;
             for (var i = 0; i < cards.length; i++) {
                 this.drawables.push(new Card(coord[i][0], coord[i][1], heightCard, heightCard, cards[i].number, cards[i].color, cards[i].shape, true, cards[i].concrete, cards[i].uuid, cards[i].passed));
-                console.log(this.drawables);
             }
         };
 
