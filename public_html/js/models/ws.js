@@ -7,10 +7,12 @@ define(function (require) {
 
         connect: function () {
             var self = this;
+            var attempts = 1;
 
             this.socket = new WebSocket('ws://' + window.location.hostname + ':' + window.location.port + '/api/ws');
 
             this.socket.onopen = function() {
+                attempts = 1;
                 console.log("Соединение установлено.");
             };
 
@@ -21,6 +23,11 @@ define(function (require) {
                     console.log('Обрыв соединения');
                 }
                 console.log('Код: ' + event.code + ' причина: ' + event.reason);
+                //
+                setTimeout(function () {
+                    attempts++;
+                    self.connect();
+                }, self.generateInterval(attempts));
             };
 
             this.socket.onmessage = function(event) {
@@ -39,8 +46,11 @@ define(function (require) {
 
         send: function (data) {
             this.socket.send(data);
-        }
+        },
 
+        generateInterval: function (k) {
+            return Math.min(30, (Math.pow(2, k) - 1)) * 1000;
+        }
     });
 
     return new Socket();
